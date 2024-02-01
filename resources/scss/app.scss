@@ -1,1 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+
+.img-card {
+    width: 90%;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    object-fit: cover;
+    display: block;
+}
