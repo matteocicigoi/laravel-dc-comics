@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Guest\ComicsController;
+use App\Http\Controllers\Guest\PageController;
+use Doctrine\DBAL\Schema\View;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::resource('/',PageController::class);
 Route::resource('comics',ComicsController::class);

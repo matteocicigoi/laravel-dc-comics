@@ -3,6 +3,9 @@
 @section('main')
     <main class="container text-center">
         <h1 class="m-5">{{ $comic['title'] }}</h1>
+        <div class="fixed-top text-start ms-3 mt-3">
+            <a href="{{ route('comics.index') }}"><i class="fa-solid fa-house fs-1"></i></a>
+        </div>
         <div class="row">
             <img src="{{ $comic['thumb'] }}" alt="{{ $comic['title'] }}" class="col-6">
             <div class="col-6 text-start">
