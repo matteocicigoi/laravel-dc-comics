@@ -1,93 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Requests;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreComicsRequest;
-use App\Models\Comic;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
-class ComicsController extends Controller
+class StoreComicsRequest extends FormRequest
 {
     /**
-     * Display a listing of the resource.
+     * Determine if the user is authorized to make this request.
      */
-    public function index()
+    public function authorize(): bool
     {
-        $comics = Comic::all();
-        return view('home', compact('comics'));
+        return true;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function create()
+    public function rules(): array
     {
-        return view('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreComicsRequest $request)
-    {
-        //$data = $request->all();
-        $data = $request->validated();
-        //$data = $this->validation($request->all());
-        $new_comic = new Comic();
-        $new_comic->title = $data['title'];
-        $new_comic->description = $data['description'];
-        $new_comic->thumb = $data['thumb'];
-        $new_comic->price = $data['price'];
-        $new_comic->series = $data['series'];
-        $new_comic->sale_date = $data['sale_date'];
-        $new_comic->type = $data['type'];
-        $new_comic->artists = $data['artists'];
-        $new_comic->writers = $data['writers'];
-        $new_comic->save(); 
-
-        return redirect()->route('comics.show', $new_comic->id);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comic $comic)
-    {
-        return view('show', compact('comic'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comic $comic)
-    {
-        return view('update', compact('comic'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(StoreComicsRequest $request, Comic $comic)
-    {
-        //$data = $this->validation($request->all());
-        $data = $request->validated();
-        $comic->update($data);
-        return redirect()->route('comics.show', $comic->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comic $comic)
-    {
-        $comic->delete();
-        return redirect()->route('comics.index');
-    }
-
-    /*private function validation($data) {
-        $validator = Validator::make($data, [
+        return [
             'title' => 'required|min:3|max:90',
             'description' => 'required|min:15|max:5000',
             'thumb' => 'required|min:5|max:500',
@@ -98,7 +32,12 @@ class ComicsController extends Controller
             'artists' => 'required|max:1000',
             'writers' => 'required|max:1000',
             
-        ], [
+        ];
+    }
+
+    public function messages()
+    {
+        return [
             'title.required' => 'Il campo del titolo è obbligatorio.',
             'title.min' => 'Il campo del titolo deve essere lungo almeno :min caratteri.',
             'title.max' => 'Il campo del titolo non deve superare i :max caratteri.',
@@ -131,7 +70,6 @@ class ComicsController extends Controller
 
             'writers.required' => 'Il campo degli scrittori è obbligatorio.',
             'writers.max' => 'Il campo degli scrittori deve essere lungo almeno :max caratteri.',
-        ])->validate();
-        return $validator;
-    }*/
+        ];
+    }
 }
