@@ -3,6 +3,7 @@
 - Model
 - Migration
 - Seeder
+- Request 
 - Resource Controller
     - Index
     - Show
